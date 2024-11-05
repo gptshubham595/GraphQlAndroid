@@ -8,3 +8,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+webGraphQLServer/server/node_modules
+webGraphQLServer/client/node_modules

@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     kotlin("android")
-    id("com.apollographql.apollo3")
+    id("com.apollographql.apollo")
 }
 
 android {
@@ -85,23 +85,21 @@ dependencies {
 
 
     implementation(libs.apollo.runtime)
-
 }
 
 tasks.register<Exec>("startGraphQLServer") {
     println("Starting GraphQL")
     description = "starts the graphql."
     group = "graph-ql"
-    workingDir = rootDir
-    commandLine("cd", "webGraphQLServer/fullstack-tutorial/final/server/")
+    workingDir = project.file("$rootDir")
+    commandLine("sh","startGraphQLServer.sh")
     doLast {
-        commandLine("npm", "start")
         logger.info("graphQL started successfully.")
     }
 }
 
 afterEvaluate {
-    tasks.findByName("preBuild")?.let {
-        it.dependsOn("startGraphQLServer")
+    tasks.findByName("preBuild")?.apply {
+        dependsOn("startGraphQLServer")
     }
 }

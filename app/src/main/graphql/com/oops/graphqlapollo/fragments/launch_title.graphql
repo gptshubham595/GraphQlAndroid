@@ -1,0 +1,11 @@
+fragment LaunchTitle on Launch {
+    id
+    site
+    mission {
+        name
+    }
+    rocket {
+        id
+        name
+    }
+}
