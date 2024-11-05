@@ -1,25 +1,25 @@
 type Query {
-    launches("The number of results to show. Must be >= 1. Default = 20" pageSize: Int, "If you add a cursor here, it will only return results _after_ this cursor" after: String): LaunchConnection!
+  launches("The number of results to show. Must be >= 1. Default = 20" pageSize: Int, "If you add a cursor here, it will only return results _after_ this cursor" after: String): LaunchConnection!
 
-    launch(id: ID!): Launch
+  launch(id: ID!): Launch
 
-    me: User
+  me: User
 }
 
 type Mutation {
-    bookTrips(launchIds: [ID]!): TripUpdateResponse!
+  bookTrips(launchIds: [ID]!): TripUpdateResponse!
 
-    cancelTrip(launchId: ID!): TripUpdateResponse!
+  cancelTrip(launchId: ID!): TripUpdateResponse!
 
-    login(email: String): User
+  login(email: String): User
 }
 
 type TripUpdateResponse {
-    success: Boolean!
+  success: Boolean!
 
-    message: String
+  message: String
 
-    launches: [Launch]
+  launches: [Launch]
 }
 
 """
@@ -28,87 +28,87 @@ last item in the list. Pass this cursor to the launches query to fetch results
 after these.
 """
 type LaunchConnection {
-    cursor: String!
+  cursor: String!
 
-    hasMore: Boolean!
+  hasMore: Boolean!
 
-    launches: [Launch]!
+  launches: [Launch]!
 }
 
 type Launch {
-    id: ID!
+  id: ID!
 
-    site: String
+  site: String
 
-    mission: Mission
+  mission: Mission
 
-    rocket: Rocket
+  rocket: Rocket
 
-    isBooked: Boolean!
+  isBooked: Boolean!
 }
 
 type Rocket {
-    id: ID!
+  id: ID!
 
-    name: String
+  name: String
 
-    type: String
+  type: String
 }
 
 type User {
-    id: ID!
+  id: ID!
 
-    email: String!
+  email: String!
 
-    profileImage: String
+  profileImage: String
 
-    trips: [Launch]!
+  trips: [Launch]!
 
-    token: String
+  token: String
 }
 
 type Mission {
-    name: String
+  name: String
 
-    missionPatch(size: PatchSize): String
+  missionPatch(size: PatchSize): String
 }
 
 enum PatchSize {
-    SMALL
+  SMALL
 
-    LARGE
+  LARGE
 }
 
 """
 A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, as well as the entry points for query, mutation, and subscription operations.
 """
 type __Schema {
-    description: String
+  description: String
 
-    """
-    A list of all types supported by this server.
-    """
-    types: [__Type!]!
+  """
+  A list of all types supported by this server.
+  """
+  types: [__Type!]!
 
-    """
-    The type that query operations will be rooted at.
-    """
-    queryType: __Type!
+  """
+  The type that query operations will be rooted at.
+  """
+  queryType: __Type!
 
-    """
-    If this server supports mutation, the type that mutation operations will be rooted at.
-    """
-    mutationType: __Type
+  """
+  If this server supports mutation, the type that mutation operations will be rooted at.
+  """
+  mutationType: __Type
 
-    """
-    If this server support subscription, the type that subscription operations will be rooted at.
-    """
-    subscriptionType: __Type
+  """
+  If this server support subscription, the type that subscription operations will be rooted at.
+  """
+  subscriptionType: __Type
 
-    """
-    A list of all directives supported by this server.
-    """
-    directives: [__Directive!]!
+  """
+  A list of all directives supported by this server.
+  """
+  directives: [__Directive!]!
 }
 
 """
@@ -117,120 +117,120 @@ The fundamental unit of any GraphQL Schema is the type. There are many kinds of 
 Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByUrl`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
 """
 type __Type {
-    kind: __TypeKind!
+  kind: __TypeKind!
 
-    name: String
+  name: String
 
-    description: String
+  description: String
 
-    specifiedByUrl: String
+  specifiedByUrl: String
 
-    fields(includeDeprecated: Boolean = false): [__Field!]
+  fields(includeDeprecated: Boolean = false): [__Field!]
 
-    interfaces: [__Type!]
+  interfaces: [__Type!]
 
-    possibleTypes: [__Type!]
+  possibleTypes: [__Type!]
 
-    enumValues(includeDeprecated: Boolean = false): [__EnumValue!]
+  enumValues(includeDeprecated: Boolean = false): [__EnumValue!]
 
-    inputFields(includeDeprecated: Boolean = false): [__InputValue!]
+  inputFields(includeDeprecated: Boolean = false): [__InputValue!]
 
-    ofType: __Type
+  ofType: __Type
 }
 
 """
 An enum describing what kind of type a given `__Type` is.
 """
 enum __TypeKind {
-    """
-    Indicates this type is a scalar.
-    """
-    SCALAR
+  """
+  Indicates this type is a scalar.
+  """
+  SCALAR
 
-    """
-    Indicates this type is an object. `fields` and `interfaces` are valid fields.
-    """
-    OBJECT
+  """
+  Indicates this type is an object. `fields` and `interfaces` are valid fields.
+  """
+  OBJECT
 
-    """
-    Indicates this type is an interface. `fields`, `interfaces`, and `possibleTypes` are valid fields.
-    """
-    INTERFACE
+  """
+  Indicates this type is an interface. `fields`, `interfaces`, and `possibleTypes` are valid fields.
+  """
+  INTERFACE
 
-    """
-    Indicates this type is a union. `possibleTypes` is a valid field.
-    """
-    UNION
+  """
+  Indicates this type is a union. `possibleTypes` is a valid field.
+  """
+  UNION
 
-    """
-    Indicates this type is an enum. `enumValues` is a valid field.
-    """
-    ENUM
+  """
+  Indicates this type is an enum. `enumValues` is a valid field.
+  """
+  ENUM
 
-    """
-    Indicates this type is an input object. `inputFields` is a valid field.
-    """
-    INPUT_OBJECT
+  """
+  Indicates this type is an input object. `inputFields` is a valid field.
+  """
+  INPUT_OBJECT
 
-    """
-    Indicates this type is a list. `ofType` is a valid field.
-    """
-    LIST
+  """
+  Indicates this type is a list. `ofType` is a valid field.
+  """
+  LIST
 
-    """
-    Indicates this type is a non-null. `ofType` is a valid field.
-    """
-    NON_NULL
+  """
+  Indicates this type is a non-null. `ofType` is a valid field.
+  """
+  NON_NULL
 }
 
 """
 Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type.
 """
 type __Field {
-    name: String!
+  name: String!
 
-    description: String
+  description: String
 
-    args(includeDeprecated: Boolean = false): [__InputValue!]!
+  args(includeDeprecated: Boolean = false): [__InputValue!]!
 
-    type: __Type!
+  type: __Type!
 
-    isDeprecated: Boolean!
+  isDeprecated: Boolean!
 
-    deprecationReason: String
+  deprecationReason: String
 }
 
 """
 Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value.
 """
 type __InputValue {
-    name: String!
+  name: String!
 
-    description: String
+  description: String
 
-    type: __Type!
+  type: __Type!
 
-    """
-    A GraphQL-formatted string representing the default value for this input value.
-    """
-    defaultValue: String
+  """
+  A GraphQL-formatted string representing the default value for this input value.
+  """
+  defaultValue: String
 
-    isDeprecated: Boolean!
+  isDeprecated: Boolean!
 
-    deprecationReason: String
+  deprecationReason: String
 }
 
 """
 One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string.
 """
 type __EnumValue {
-    name: String!
+  name: String!
 
-    description: String
+  description: String
 
-    isDeprecated: Boolean!
+  isDeprecated: Boolean!
 
-    deprecationReason: String
+  deprecationReason: String
 }
 
 """
@@ -239,115 +239,115 @@ A Directive provides a way to describe alternate runtime execution and type vali
 In some cases, you need to provide options to alter GraphQL's execution behavior in ways field arguments will not suffice, such as conditionally including or skipping a field. Directives provide this by describing additional information to the executor.
 """
 type __Directive {
-    name: String!
+  name: String!
 
-    description: String
+  description: String
 
-    isRepeatable: Boolean!
+  isRepeatable: Boolean!
 
-    locations: [__DirectiveLocation!]!
+  locations: [__DirectiveLocation!]!
 
-    args: [__InputValue!]!
+  args: [__InputValue!]!
 }
 
 """
 A Directive can be adjacent to many parts of the GraphQL language, a __DirectiveLocation describes one such possible adjacencies.
 """
 enum __DirectiveLocation {
-    """
-    Location adjacent to a query operation.
-    """
-    QUERY
+  """
+  Location adjacent to a query operation.
+  """
+  QUERY
 
-    """
-    Location adjacent to a mutation operation.
-    """
-    MUTATION
+  """
+  Location adjacent to a mutation operation.
+  """
+  MUTATION
 
-    """
-    Location adjacent to a subscription operation.
-    """
-    SUBSCRIPTION
+  """
+  Location adjacent to a subscription operation.
+  """
+  SUBSCRIPTION
 
-    """
-    Location adjacent to a field.
-    """
-    FIELD
+  """
+  Location adjacent to a field.
+  """
+  FIELD
 
-    """
-    Location adjacent to a fragment definition.
-    """
-    FRAGMENT_DEFINITION
+  """
+  Location adjacent to a fragment definition.
+  """
+  FRAGMENT_DEFINITION
 
-    """
-    Location adjacent to a fragment spread.
-    """
-    FRAGMENT_SPREAD
+  """
+  Location adjacent to a fragment spread.
+  """
+  FRAGMENT_SPREAD
 
-    """
-    Location adjacent to an inline fragment.
-    """
-    INLINE_FRAGMENT
+  """
+  Location adjacent to an inline fragment.
+  """
+  INLINE_FRAGMENT
 
-    """
-    Location adjacent to a variable definition.
-    """
-    VARIABLE_DEFINITION
+  """
+  Location adjacent to a variable definition.
+  """
+  VARIABLE_DEFINITION
 
-    """
-    Location adjacent to a schema definition.
-    """
-    SCHEMA
+  """
+  Location adjacent to a schema definition.
+  """
+  SCHEMA
 
-    """
-    Location adjacent to a scalar definition.
-    """
-    SCALAR
+  """
+  Location adjacent to a scalar definition.
+  """
+  SCALAR
 
-    """
-    Location adjacent to an object type definition.
-    """
-    OBJECT
+  """
+  Location adjacent to an object type definition.
+  """
+  OBJECT
 
-    """
-    Location adjacent to a field definition.
-    """
-    FIELD_DEFINITION
+  """
+  Location adjacent to a field definition.
+  """
+  FIELD_DEFINITION
 
-    """
-    Location adjacent to an argument definition.
-    """
-    ARGUMENT_DEFINITION
+  """
+  Location adjacent to an argument definition.
+  """
+  ARGUMENT_DEFINITION
 
-    """
-    Location adjacent to an interface definition.
-    """
-    INTERFACE
+  """
+  Location adjacent to an interface definition.
+  """
+  INTERFACE
 
-    """
-    Location adjacent to a union definition.
-    """
-    UNION
+  """
+  Location adjacent to a union definition.
+  """
+  UNION
 
-    """
-    Location adjacent to an enum definition.
-    """
-    ENUM
+  """
+  Location adjacent to an enum definition.
+  """
+  ENUM
 
-    """
-    Location adjacent to an enum value definition.
-    """
-    ENUM_VALUE
+  """
+  Location adjacent to an enum value definition.
+  """
+  ENUM_VALUE
 
-    """
-    Location adjacent to an input object type definition.
-    """
-    INPUT_OBJECT
+  """
+  Location adjacent to an input object type definition.
+  """
+  INPUT_OBJECT
 
-    """
-    Location adjacent to an input object field definition.
-    """
-    INPUT_FIELD_DEFINITION
+  """
+  Location adjacent to an input object field definition.
+  """
+  INPUT_FIELD_DEFINITION
 }
 
 """
@@ -371,6 +371,6 @@ Exposes a URL that specifies the behaviour of this scalar.
 directive @specifiedBy ("The URL that specifies the behaviour of this scalar." url: String!) on SCALAR
 
 schema {
-    query: Query
-    mutation: Mutation
+  query: Query
+  mutation: Mutation
 }

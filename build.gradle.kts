@@ -2,5 +2,7 @@
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.android) apply false
-    id("com.apollographql.apollo") version "4.0.0"
+    alias(libs.plugins.apollo4.plugin)
+    alias(libs.plugins.hilt.android.plugin) apply false
+    alias(libs.plugins.ktlint.plugin) apply false
 }

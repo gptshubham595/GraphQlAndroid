@@ -1,7 +1,12 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 plugins {
     alias(libs.plugins.android.application)
     kotlin("android")
-    id("com.apollographql.apollo")
+    kotlin("kapt")
+    alias(libs.plugins.apollo4.plugin)
+    alias(libs.plugins.hilt.android.plugin)
+    alias(libs.plugins.ktlint.plugin)
 }
 
 android {
@@ -50,6 +55,7 @@ android {
 
     buildFeatures {
         compose = true
+        dataBinding = true
     }
 
     apollo {
@@ -83,6 +89,8 @@ dependencies {
     implementation(libs.activity.compose)
     implementation(libs.viewmodel.compose)
 
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
     implementation(libs.apollo.runtime)
 }
@@ -94,6 +102,7 @@ tasks.register<Exec>("startGraphQLServer") {
     workingDir = project.file("$rootDir")
     commandLine("sh","startGraphQLServer.sh")
     doLast {
+//        commandLine(":app:downloadSampleGraphQLApolloSchemaFromIntrospection") // RUN FIRST TIMER
         logger.info("graphQL started successfully.")
     }
 }
@@ -101,5 +110,36 @@ tasks.register<Exec>("startGraphQLServer") {
 afterEvaluate {
     tasks.findByName("preBuild")?.apply {
         dependsOn("startGraphQLServer")
+//        dependsOn(":app:generateApolloSources") // RUN FIRST TIMER
+    }
+}
+
+ktlint {
+    version.set("0.48.2")
+    debug.set(true)
+    verbose.set(true)
+    android.set(true)
+    outputToConsole.set(true)
+    outputColorName.set("RED")
+    ignoreFailures.set(true)
+    enableExperimentalRules.set(true)
+    additionalEditorconfig.set( // not supported until ktlint 0.49
+        mapOf(
+            "max_line_length" to "20"
+        )
+    )
+    // disabledRules.set(setOf("final-newline")) // not supported with ktlint 0.48+
+    baseline.set(file("$projectDir/config/ktlint-baseline.xml"))
+    reporters {
+        reporter(ReporterType.PLAIN)
+        reporter(ReporterType.CHECKSTYLE)
+        reporter(ReporterType.SARIF)
+    }
+    kotlinScriptAdditionalPaths {
+        include(fileTree("scripts/"))
+    }
+    filter {
+        exclude("**/generated/**")
+        include("**/kotlin/**")
     }
 }
